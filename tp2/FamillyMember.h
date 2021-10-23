@@ -8,7 +8,7 @@ class FamillyMember{
 private:
 	int cnt;
 	int id;
-	int *idParent;
+	int idParent[2];
 	int childCh;
 	int *idChild;
 	string name;
@@ -19,7 +19,7 @@ private:
 	string childData;
 	string deathDay;
 public:
-	FamillyMember(string, string, string, string, string, string, string, int * idParent, int childCh, int* idChild);
+	FamillyMember(string, string, string, string*, string, string, string, string);
 
 	void SaveToFile();
 
@@ -52,4 +52,8 @@ public:
 
 	void SetChildName(int* data);
 	int * GetChildName();
+
+	int* NameToId(string* names);
 };
+
+int bitDepth(int num);

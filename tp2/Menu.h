@@ -18,10 +18,8 @@ int Menu() {
 		switch (v) {
 		case 1:
 		{
-
-			string name, bDay, age, * parentName, parentData, spousName, spousData, * childName, childData, deathDay;
+			string name, bDay, age, parentName[2], parentData, spousName, spousData, * childName, childData, deathDay;
 			int childCn = 0;
-			parentName = new string[2];
 			cout << "===Add familly member====" << endl;
 			cout << "!Press ENTER if there is no data !" << endl;
 			//имя
@@ -40,19 +38,15 @@ int Menu() {
 			getline(cin, parentName[0]);
 			//имя отца
 			cout << "Enter dad`s name: ";
-			cin.ignore();
 			getline(cin, parentName[1]);
 			//информация о родителях
 			cout << "Enter other parents data: ";
-			cin.ignore();
 			getline(cin, parentData);
 			//имя супруга(и)
 			cout << "Enter the name of the spous: ";
-			cin.ignore();
 			getline(cin, spousName);
 			//информация о супруге
 			cout << "Enter data about spous: ";
-			cin.ignore();
 			getline(cin, spousData);
 			//количество детей
 			cout << "Enter child quantity: ";
@@ -72,7 +66,7 @@ int Menu() {
 			cout << "Enter death date: ";
 			cin >> deathDay;
 
-			FamillyMember son(name, bDay, age, parentData, spousData, childData, deathDay);
+			FamillyMember son(name, bDay, age, parentName, parentData, spousName, spousData, deathDay);
 			son.SaveToFile();
 		}
 		case 2:

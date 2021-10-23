@@ -1,7 +1,8 @@
 #include "FamillyMember.h"
+#include<string>
 
-FamillyMember::FamillyMember(string name = NULL, string bDay = NULL, string age = NULL, string parentData = NULL, string spousData = NULL,
-	string childData = NULL, string deathDay = NULL, int* idParent, int childCh, int* idChild) {
+FamillyMember::FamillyMember(string name = NULL, string bDay = NULL, string age = NULL, string * parentName = NULL, string parentData = NULL, string spousData = NULL,
+	string childData = NULL, string deathDay = NULL) {
 	ifstream fin("cnt.txt");
 	FamillyMember::SetName(name);
 	FamillyMember::SetBDay(bDay);
@@ -10,15 +11,16 @@ FamillyMember::FamillyMember(string name = NULL, string bDay = NULL, string age 
 	FamillyMember::SetSpousData(spousData);
 	FamillyMember::SetChildData(childData);
 	FamillyMember::SetDeathDay(deathDay);
-	FamillyMember::SetParentName(idParent);
-	FamillyMember::SetChildCh(childCh);
-	FamillyMember::SetChildName(idChild);
+	//FamillyMember::SetParentName(idParent);
+	//FamillyMember::SetChildCh(childCh);
+	//FamillyMember::SetChildName(idChild);
 	if (fin.peek() != EOF) {
 		fin >> FamillyMember::cnt;
 	}
 	else FamillyMember::cnt = 0;
 	fin.close();
 	FamillyMember::id = FamillyMember::cnt;
+	FamillyMember::SetParentName(NameToId(parentName));
 }
 
 void FamillyMember::SaveToFile() {
@@ -109,8 +111,28 @@ int* FamillyMember::GetChildName() {
 	return this->idChild;
 }
 
-int NameToId(string * names) {
-	ifstream fin("fileFM");
-	int id = 0;
+int* FamillyMember::NameToId(string* names) {
+	ifstream fin("fileFM.txt");
+	string tmp;
+	int id[2]{};
+	for (int i = 0; i < 2; i++) {
+		do {
+			getline(fin, tmp);
+		} while (tmp != names[i]);
+		int seek = (int)fin.tellg() - names[i].size() - bitDepth(this->cnt) - 4;
+		fin.clear();
+		fin.seekg(seek, ios::beg);
+		getline(fin, tmp);
+		id[i] = stoi(tmp);
+	}
 	return id;
+}
+
+int bitDepth(int num) {
+	int count = 0;
+	while (num != 0) {
+		count++;
+		num /= 10;
+	}
+	return count;
 }
