@@ -10,15 +10,14 @@ int Menu() {
 	while (menu) {
 		cout << "===Main menu====" << endl;
 		cout << "1.Add family member" << endl;
-		cout << "2.Read from file" << endl;
-		cout << "3.Print familly tree" << endl;
-		cout << "4.Edit data" << endl;
+		cout << "2.Print familly tree" << endl;
+		cout << "3.Edit data" << endl;
 		cout << "0.Exit to Windows " << endl;
 		cin >> v;
 		switch (v) {
 		case 1:
 		{
-			string name, bDay, age, parentName[2], parentData, spousName, spousData, * childName, childData, deathDay;
+			string name, bDay, age, *parentName, parentData, * spousName, spousData, * childName, childData, deathDay;
 			int childCn = 0;
 			cout << "===Add familly member====" << endl;
 			cout << "!Press ENTER if there is no data !" << endl;
@@ -33,6 +32,7 @@ int Menu() {
 			cout << "Enter age: ";
 			cin >> age;
 			//имя мамы
+			parentName = new string[2];
 			cout << "Enter mom`s name: ";
 			cin.ignore();
 			getline(cin, parentName[0]);
@@ -43,8 +43,9 @@ int Menu() {
 			cout << "Enter other parents data: ";
 			getline(cin, parentData);
 			//имя супруга(и)
+			spousName = new string[1];
 			cout << "Enter the name of the spous: ";
-			getline(cin, spousName);
+			getline(cin, spousName[0]);
 			//информация о супруге
 			cout << "Enter data about spous: ";
 			getline(cin, spousData);
@@ -53,9 +54,9 @@ int Menu() {
 			cin >> childCn;
 			//имена детей
 			childName = new string[childCn];
+			cin.ignore();
 			for (int i = 0; i < childCn; i++) {
-				cout << "Enter the name of the " << i << " child: ";
-				cin.ignore();
+				cout << "Enter the name of the " << i+1 << " child: ";
 				getline(cin, childName[i]);
 			}
 			//информация о детях
@@ -66,11 +67,16 @@ int Menu() {
 			cout << "Enter death date: ";
 			cin >> deathDay;
 
-			FamillyMember son(name, bDay, age, parentName, parentData, spousName, spousData, deathDay);
+			FamillyMember son(name, bDay, age, parentName, parentData, spousName, spousData, deathDay, childName, childData, childCn);
 			son.SaveToFile();
 		}
 		case 2:
 		{
+			string nameMemb;
+			cout << "Entered name the familly member";
+			cin.ignore();
+			getline(cin, nameMemb);
+			FamillyMember memb(nameMemb);
 
 		}
 		case 0:

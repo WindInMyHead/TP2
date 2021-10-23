@@ -6,11 +6,11 @@ using namespace std;
 
 class FamillyMember{
 private:
-	int cnt;
 	int id;
-	int idParent[2];
 	int childCh;
+	int *idParent;
 	int *idChild;
+	int *idSpous;
 	string name;
 	string bDay;
 	string age;
@@ -19,7 +19,8 @@ private:
 	string childData;
 	string deathDay;
 public:
-	FamillyMember(string, string, string, string*, string, string, string, string);
+	FamillyMember(string name = NULL, string bDay = NULL, string age = NULL, string* parentName = NULL, string parentData = NULL, string* spousName = NULL,
+		string spousData = NULL, string deathDay = NULL, string* childName = NULL, string childData = NULL, int childCn = 0);
 
 	void SaveToFile();
 
@@ -52,6 +53,9 @@ public:
 
 	void SetChildName(int* data);
 	int * GetChildName();
+
+	void SetSpousName(int* data);
+	int GetSpousName();
 
 	int* NameToId(string* names);
 };

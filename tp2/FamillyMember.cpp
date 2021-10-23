@@ -1,26 +1,25 @@
 #include "FamillyMember.h"
 #include<string>
 
-FamillyMember::FamillyMember(string name = NULL, string bDay = NULL, string age = NULL, string * parentName = NULL, string parentData = NULL, string spousData = NULL,
-	string childData = NULL, string deathDay = NULL) {
+FamillyMember::FamillyMember(string name, string bDay, string age, string * parentName, string parentData, string * spousName,
+	string spousData, string deathDay, string * childName, string childData, int childCn) {
 	ifstream fin("cnt.txt");
 	FamillyMember::SetName(name);
 	FamillyMember::SetBDay(bDay);
 	FamillyMember::SetAge(age);
 	FamillyMember::SetParentData(parentData);
 	FamillyMember::SetSpousData(spousData);
-	FamillyMember::SetChildData(childData);
 	FamillyMember::SetDeathDay(deathDay);
-	//FamillyMember::SetParentName(idParent);
-	//FamillyMember::SetChildCh(childCh);
-	//FamillyMember::SetChildName(idChild);
+	FamillyMember::SetChildData(childData);
+	FamillyMember::SetChildCh(childCn);
 	if (fin.peek() != EOF) {
-		fin >> FamillyMember::cnt;
+		fin >> FamillyMember::id;
 	}
-	else FamillyMember::cnt = 0;
+	else FamillyMember::id = 0;
 	fin.close();
-	FamillyMember::id = FamillyMember::cnt;
 	FamillyMember::SetParentName(NameToId(parentName));
+	FamillyMember::SetChildName(NameToId(childName));
+	FamillyMember::SetSpousName(NameToId(spousName));
 }
 
 void FamillyMember::SaveToFile() {
@@ -32,8 +31,8 @@ void FamillyMember::SaveToFile() {
 	}
 	fout.close();
 	ofstream f("cnt.txt");
-	this->cnt++;
-	f << this->cnt;
+	this->id;
+	f << this->id;
 	f.close();
 }
 
@@ -87,6 +86,7 @@ string FamillyMember::GetAge() {
 }
 //=====
 void FamillyMember::SetParentName(int* data) {
+	this->idParent = new int[2];
 	this->idParent[0] = data[0];
 	this->idParent[1] = data[1];
 }
@@ -110,7 +110,15 @@ void FamillyMember::SetChildName(int * data) {
 int* FamillyMember::GetChildName() {
 	return this->idChild;
 }
-
+//=====
+void FamillyMember::SetSpousName(int* data) {
+	this->idSpous = new int[1];
+	this->idSpous[0] = data[0];
+}
+int FamillyMember::GetSpousName() {
+	return this->idSpous[0];
+}
+//=====
 int* FamillyMember::NameToId(string* names) {
 	ifstream fin("fileFM.txt");
 	string tmp;
@@ -119,9 +127,9 @@ int* FamillyMember::NameToId(string* names) {
 		do {
 			getline(fin, tmp);
 		} while (tmp != names[i]);
-		int seek = (int)fin.tellg() - names[i].size() - bitDepth(this->cnt) - 4;
+		int seek = names[i].size() + bitDepth(this->id) + 4;
 		fin.clear();
-		fin.seekg(seek, ios::beg);
+		fin.seekg(- seek, ios::cur);
 		getline(fin, tmp);
 		id[i] = stoi(tmp);
 	}
