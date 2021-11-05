@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -139,22 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Familly.cpp" />
-    <ClCompile Include="FamillyMember.cpp" />
     <ClCompile Include="List.cpp" />
+    <ClCompile Include="FamillyMember.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="List.h" />
     <ClInclude Include="Familly.h" />
     <ClInclude Include="FamillyMember.h" />
-    <ClInclude Include="FileManager.h" />
-    <ClInclude Include="List.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="cnt.txt" />
-    <Text Include="familly.txt" />
-    <Text Include="fileFM.txt" />
+    <Text Include="file.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
