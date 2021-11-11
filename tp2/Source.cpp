@@ -4,5 +4,6 @@
 #include"Menu.h"
 
 int main() {
-	return Menu();
+	List list;
+	return Menu(list);
 }

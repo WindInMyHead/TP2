@@ -14,6 +14,7 @@ private:
 	string childData;
 	string deathDay;
 public:
+	FamillyMember() { };
 	FamillyMember(string name = NULL, string bDay = NULL, string age = NULL, string parentData = NULL, string spousData = NULL, string deathDay = NULL, string childData = NULL);
 
 	void SetName(string name);

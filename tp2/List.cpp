@@ -1,7 +1,4 @@
 #include "List.h"
-#include <iostream>
-
-using namespace std;
 
 List::List(){
     Head = Tail = NULL;
@@ -17,7 +14,7 @@ int List::GetCount(){
 }
 
 List& List::operator++() {
-    Element* temp = new Element[1];
+    system("cls");
     string name, bDay, age, parentData, spousData, childData, deathDay;
     cout << "===Add familly member====" << endl;
     cout << "!Press ENTER if there is no data !" << endl;
@@ -44,11 +41,13 @@ List& List::operator++() {
     //дата смерти
     cout << "Enter death date: ";
     cin >> deathDay;
-    FamillyMember memb(name, bDay, age, parentData, spousData, deathDay, childData);
+    FamillyMember* memb = new FamillyMember(name, bDay, age, parentData, spousData, deathDay, childData);
+    Element* temp = new Element;
     temp->data = memb;
     temp->pNext = NULL;
 
-    if (count == 0){
+
+    if (count == 0) {
         temp->pNext = nullptr;
         Head = Tail = temp;
     }
@@ -63,8 +62,10 @@ List& List::operator++() {
 
 void List::AddElem(Element *elem) {
     Element* temp = elem;
+    temp->data = elem->data;
+    temp->pNext = elem->pNext;
+
     if (count == 0) {
-        temp->pNext = nullptr;
         Head = Tail = temp;
     }
     else {
@@ -72,10 +73,11 @@ void List::AddElem(Element *elem) {
         while (p->pNext != NULL) p = p->pNext;
         p->pNext = temp;
     }
-    count++;
+    this->count++;
 }
 
 List& List::Del() {
+    system("cls");
     if (count == 0) {
         cout << "List is empty" << endl;
     }
@@ -91,7 +93,7 @@ List& List::Del() {
         Element* temp = Head;
         cout << "Which family member do you want to remove?" << endl;
         while (cnt != count) {
-            cout << cnt + 1 << ". " << temp->data.GetName();
+            cout << ++cnt << ". " << temp->data->GetName() << endl;
             temp = temp->pNext;
         }
         cin >> cnt;
@@ -113,17 +115,20 @@ List& List::Del() {
 }
 
 List& List::Edit() {
+    List main = *this;
     List reserve;
     int cnt = 0;
-    Element* temp = Head;
+    Element* temp = new Element;
+    temp = Head;
+    system("cls");
     cout << "Which family member do you want to edit?" << endl;
     while (cnt != count) {
-        cout << cnt + 1 << ". " << temp->data.GetName();
+        cout << ++cnt << ". " << temp->data->GetName() << endl;
         temp = temp->pNext;
     }
     cin >> cnt;
     cnt -= 1;
-    temp = Head;
+    temp = main.Head;
     for (int i = 0; i < cnt; i++) {
         reserve.AddElem(temp);
         temp = temp->pNext;
@@ -147,49 +152,63 @@ List& List::Edit() {
         cout << "Enter new name: ";
         cin.ignore();
         getline(cin, name);
-        temp->data.SetName(name);
+        temp->data->SetName(name);
+        cout << "Complete!";
+        break;
     }
     case 2:
     {
         string bDay;
         cout << "Enter new bDay: ";
+        cin.ignore();
         getline(cin, bDay);
-        temp->data.SetBDay(bDay);
+        temp->data->SetBDay(bDay);
+        break;
     }
     case 3:
     {
         string age;
         cout << "Enter new age: ";
+        cin.ignore();
         getline(cin, age);
-        temp->data.SetAge(age);
+        temp->data->SetAge(age);
+        break;
     }
     case 4:
     {
         string parentData;
         cout << "Enter new parent data: ";
+        cin.ignore();
         getline(cin, parentData);
-        temp->data.SetParentData(parentData);
+        temp->data->SetParentData(parentData);
+        break;
     }
     case 5:
     {
         string spousData;
         cout << "Enter new spous data: ";
+        cin.ignore();
         getline(cin, spousData);
-        temp->data.SetParentData(spousData);
+        temp->data->SetSpousData(spousData);
+        break;
     }
     case 6:
     {
         string childData;
         cout << "Enter new child data: ";
+        cin.ignore();
         getline(cin, childData);
-        temp->data.SetParentData(childData);
+        temp->data->SetChildData(childData);
+        break;
     }
     case 7:
     {
         string day;
         cout << "Enter new death day: ";
+        cin.ignore();
         getline(cin, day);
-        temp->data.SetName(day);
+        temp->data->SetDeathDay(day);
+        break;
     }
     default:
     {
@@ -206,58 +225,64 @@ List& List::Edit() {
 }
 
 void List::Del_head(){
-    Element* temp = Head;
-    Head = Head->pNext;
-    delete temp;
+    Element* temp = this->Head;
+    Head = this->Head->pNext;
 }
 
 void List::DelAll(){
-    while (Head != 0)
-        Del_head();
+    while (Head != 0) this->Del_head();
 }
 
 void List::Print(){
-    Element* temp = Head;
+    system("cls");
+    Element* temp = this->Head;
     if (count == 0) {
         cout << "The list is empty" << endl;
         return;
     }
 
-    while (temp != 0){
-        cout << "Name: " << temp->data.GetName() << endl << "Bday: " << temp->data.GetBDay() << "   " << "Age: " << temp->data.GetAge()
-        << endl << "Spous data: " << temp->data.GetSpousData() << endl << "Death day:" << temp->data.GetDeathDay() << endl << "Child data: " << temp->data.GetChildData() << endl;
+    int cnt = count;
+    cout << "===Familly data===" << endl;
+    while (cnt != 0) {
+        cout << "Name: " << temp->data->GetName() << endl << "Bday: " << temp->data->GetBDay() << "   " << "Age: " << temp->data->GetAge() << endl << "Parent data: " << temp->data->GetParentData()
+        << endl << "Spous data: " << temp->data->GetSpousData() << endl << "Death day:" << temp->data->GetDeathDay() << endl << "Child data: " << temp->data->GetChildData() << endl;
         // Переходим на следующий элемент
         temp = temp->pNext;
+        cnt--;
+        cout << "===================" << endl;
     }
 }
 
 void List::SaveToFile() {
     ofstream fout("file.txt");
     fout << this->count << endl;
-    while(Head != 0) {
-        fout << Head->data.GetName() << endl << Head->data.GetBDay() << endl << Head->data.GetAge() << endl << Head->data.GetParentData() << endl <<
-            Head->data.GetSpousData() << endl << Head->data.GetDeathDay() << endl << Head->data.GetChildData() << endl;
-        Head = Head->pNext;
+    Element* Head_copy = Head;
+    while(Head_copy != 0) {
+        fout << Head_copy->data->GetName() << endl << Head_copy->data->GetBDay() << endl << Head_copy->data->GetAge() << endl << Head_copy->data->GetParentData() << endl <<
+            Head_copy->data->GetSpousData() << endl << Head_copy->data->GetDeathDay() << endl << Head_copy->data->GetChildData() << endl;
+        Head_copy = Head_copy->pNext;
     }
     fout.close();
-    cout << "Complete!";
+    system("cls");
+    cout << "Complete!" << endl;
 }
 
 List& List::ReadFromFile() {
-    Element* temp = new Element[1];
     string name, bDay, age, parentData, spousData, childData, deathDay;
     int cnt = 0;
     ifstream fin("file.txt");
     fin >> cnt;
     for (int i = 0; i < cnt; i++) {
         getline(fin, name);
+        if(i == 0) getline(fin, name);
         getline(fin, bDay);
         getline(fin, age);
         getline(fin, parentData);
         getline(fin, spousData);
         getline(fin, deathDay);
         getline(fin, childData);
-        FamillyMember memb(name, bDay, age, parentData, spousData, deathDay, childData);
+        Element* temp = new Element;
+        FamillyMember * memb = new FamillyMember(name, bDay, age, parentData, spousData, deathDay, childData);
         temp->data = memb;
         temp->pNext = NULL;
 
@@ -267,11 +292,13 @@ List& List::ReadFromFile() {
         }
         else {
             Element* p = Head;
-            while (p->pNext != NULL) p = p->pNext;
+            while (p->pNext != nullptr) p = p->pNext;
             p->pNext = temp;
+            Tail = temp;
         }
         count++;
     }
+    system("cls");
     cout << "Complete!" << endl;
     return *this;
 }

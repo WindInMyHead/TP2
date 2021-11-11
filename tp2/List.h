@@ -1,15 +1,15 @@
 #pragma once
 #include "FamillyMember.h"
+#include<fstream>
 #include <string>
+#include <iostream>
 
-#pragma once
+using namespace std;
 
-
-typedef struct Element
-{
-	FamillyMember data;
+typedef struct Element {
+	FamillyMember* data {};
 	Element* pNext = 0;
-}Element;
+} Element;
 
 class List
 {
