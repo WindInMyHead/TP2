@@ -17,6 +17,14 @@ int Menu(List list) {
 		cout << "6.Delete familly member" << endl;
 		cout << "0.Exit to Windows " << endl;
 		cin >> v;
+
+		while (v < 0 || v > 6 || cin.fail()) {
+			cin.clear();
+			cin.ignore(32767, '\n');
+			cout << "Incorrect entered, retry" << endl;
+			cin >> v;
+		}
+
 		switch (v) {
 		case 1:
 		{
