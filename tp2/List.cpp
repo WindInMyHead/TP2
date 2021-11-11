@@ -12,6 +12,23 @@ List::~List(){
 int List::GetCount(){
     return count;
 }
+void List::SetCount(int cnt) {
+    this->count = cnt;
+}
+
+Element* List::GetHead() {
+    return Head;
+}
+void List::SetHead(Element* elem) {
+    this->Head = elem;
+}
+
+Element* List::GetTail() {
+    return Tail;
+}
+void List::SetTail(Element* elem) {
+    this->Tail = elem;
+}
 
 List& List::operator++() {
     system("cls");
@@ -269,65 +286,6 @@ void List::Print(){
         cnt--;
         cout << "===================" << endl;
     }
-}
-
-void List::SaveToFile() {
-    system("cls");
-    if (this->IsEmpty()) {
-        throw MyException("List is empty");
-    }
-    ofstream fout("file.txt");
-    if (!fout.is_open()) {
-        throw MyException("File do not exist");
-    }
-    fout << this->count << endl;
-    Element* Head_copy = Head;
-    while(Head_copy != 0) {
-        fout << Head_copy->data->GetName() << endl << Head_copy->data->GetBDay() << endl << Head_copy->data->GetAge() << endl << Head_copy->data->GetParentData() << endl <<
-            Head_copy->data->GetSpousData() << endl << Head_copy->data->GetDeathDay() << endl << Head_copy->data->GetChildData() << endl;
-        Head_copy = Head_copy->pNext;
-    }
-    fout.close();
-    cout << "Complete!" << endl;
-}
-
-List& List::ReadFromFile() {
-    string name, bDay, age, parentData, spousData, childData, deathDay;
-    int cnt = 0;
-    ifstream fin("file.txt");
-    if (!fin.is_open()) {
-        throw MyException("File do not exist");
-    }
-    fin >> cnt;
-    for (int i = 0; i < cnt; i++) {
-        getline(fin, name);
-        if(i == 0) getline(fin, name);
-        getline(fin, bDay);
-        getline(fin, age);
-        getline(fin, parentData);
-        getline(fin, spousData);
-        getline(fin, deathDay);
-        getline(fin, childData);
-        Element* temp = new Element;
-        FamillyMember * memb = new FamillyMember(name, bDay, age, parentData, spousData, deathDay, childData);
-        temp->data = memb;
-        temp->pNext = NULL;
-
-        if (count == 0) {
-            temp->pNext = nullptr;
-            Head = Tail = temp;
-        }
-        else {
-            Element* p = Head;
-            while (p->pNext != nullptr) p = p->pNext;
-            p->pNext = temp;
-            Tail = temp;
-        }
-        count++;
-    }
-    system("cls");
-    cout << "Complete!" << endl;
-    return *this;
 }
 
 bool List::IsEmpty() {

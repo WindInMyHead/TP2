@@ -24,10 +24,13 @@ public:
 
 	void Print();//Печать списка
 	int GetCount();
+	void SetCount(int);
 
-	void SaveToFile();
+	Element* GetHead();
+	void SetHead(Element*);
 
-	List& ReadFromFile();
+	Element* GetTail();
+	void SetTail(Element*);
 
 	bool IsEmpty();
 private:

@@ -2,10 +2,12 @@
 #include <string>
 #include "MyException.h"
 #include "List.h"
+#include "FileManager.h"
 
 using namespace std;
 
 int Menu(List list) {
+	FileManager FILE;
 	int v = 0, menu = 1;
 	while (menu) {
 		cout << "===Main menu====" << endl;
@@ -34,12 +36,12 @@ int Menu(List list) {
 			}
 			case 2:
 			{
-				list.SaveToFile();
+				FILE.SaveToFile(list);
 				break;
 			}
 			case 3:
 			{
-				list.ReadFromFile();
+				FILE.ReadFromFile(list);
 				break;
 			}
 			case 4:
@@ -71,11 +73,3 @@ int Menu(List list) {
 	}
 	return 0;
 }
-
-//Korotkin Anton
-//09.01.2002
-//19
-//korotkina natalya nikolaevna, Korotkin sergey Aleksandrovich
-//Kuznetsova Irina Andreevna
-//no
-//no
