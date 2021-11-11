@@ -1,10 +1,5 @@
 #pragma once
 #include "FamillyMember.h"
-#include<fstream>
-#include <string>
-#include <iostream>
-
-using namespace std;
 
 typedef struct Element {
 	FamillyMember* data {};
@@ -33,6 +28,8 @@ public:
 	void SaveToFile();
 
 	List& ReadFromFile();
+
+	bool IsEmpty();
 private:
 	Element* Head;
 	Element* Tail;

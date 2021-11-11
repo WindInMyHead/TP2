@@ -148,6 +148,7 @@
     <ClInclude Include="Familly.h" />
     <ClInclude Include="FamillyMember.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="MyException.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="file.txt" />

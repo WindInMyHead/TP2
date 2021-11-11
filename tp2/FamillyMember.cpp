@@ -1,5 +1,4 @@
 #include "FamillyMember.h"
-#include<string>
 
 FamillyMember::FamillyMember(string name, string bDay, string age, string parentData, string spousData, string deathDay, string childData) {
 	FamillyMember::SetName(name);

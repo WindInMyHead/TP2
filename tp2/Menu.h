@@ -1,7 +1,7 @@
 #pragma once
-#include<iostream>
-#include<string>
-#include"List.h"
+#include <string>
+#include "MyException.h"
+#include "List.h"
 
 using namespace std;
 
@@ -25,28 +25,58 @@ int Menu(List list) {
 		}
 		case 2:
 		{
-			list.SaveToFile();
-			break;
+			try {
+				list.SaveToFile();
+				break;
+			}
+			catch (MyException& exception) {
+				cout << exception.what() << endl;
+				return Menu(list);
+			}
 		}
 		case 3:
 		{
-			list.ReadFromFile();
-			break;
+			try {
+				list.ReadFromFile();
+				break;
+			}
+			catch (MyException& exception) {
+				cout << exception.what() << endl;
+				return Menu(list);
+			}
 		}
 		case 4:
 		{
-			list.Print();
-			break;
+			try {
+				list.Print();
+				break;
+			}
+			catch (MyException& exception) {
+				cout << exception.what() << endl;
+				return Menu(list);
+			}
 		}
 		case 5:
 		{
-			list.Edit();
-			break;
+			try {
+				list.Edit();
+				break;
+			}
+			catch (MyException& exception) {
+				cout << exception.what() << endl;
+				return Menu(list);
+			}
 		}
 		case 6:
 		{
-			list.Del();
-			break;
+			try {
+				list.Del();
+				break;
+			}
+			catch (MyException& exception) {
+				cout << exception.what() << endl;
+				return Menu(list);
+			}
 		}
 		case 0:
 		{

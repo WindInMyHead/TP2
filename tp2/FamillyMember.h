@@ -1,6 +1,8 @@
 #pragma once
 #include<iostream>
-#include<fstream>
+#include <fstream>
+#include <string>
+#include "MyException.h"
 
 using namespace std;
 

@@ -47,7 +47,7 @@ List& List::operator++() {
     temp->pNext = NULL;
 
 
-    if (count == 0) {
+    if (this->IsEmpty()) {
         temp->pNext = nullptr;
         Head = Tail = temp;
     }
@@ -65,7 +65,7 @@ void List::AddElem(Element *elem) {
     temp->data = elem->data;
     temp->pNext = elem->pNext;
 
-    if (count == 0) {
+    if (this->IsEmpty()) {
         Head = Tail = temp;
     }
     else {
@@ -78,8 +78,8 @@ void List::AddElem(Element *elem) {
 
 List& List::Del() {
     system("cls");
-    if (count == 0) {
-        cout << "List is empty" << endl;
+    if (this->IsEmpty()) {
+        throw MyException("List is empty");
     }
     else if (count == 1) {
         Element* temp = Head;
@@ -96,7 +96,11 @@ List& List::Del() {
             cout << ++cnt << ". " << temp->data->GetName() << endl;
             temp = temp->pNext;
         }
+        cout << ">>> ";
         cin >> cnt;
+        if (cnt<1 || cnt>count) {
+            throw MyException("Id do not exist");
+        }
         cnt -= 1;
         temp = Head;
         for (int i = 0; i < cnt; i++) {
@@ -115,18 +119,25 @@ List& List::Del() {
 }
 
 List& List::Edit() {
+    system("cls");
+    if (this->IsEmpty()) {
+        throw MyException("List is empty");
+    }
     List main = *this;
     List reserve;
     int cnt = 0;
     Element* temp = new Element;
     temp = Head;
-    system("cls");
     cout << "Which family member do you want to edit?" << endl;
     while (cnt != count) {
         cout << ++cnt << ". " << temp->data->GetName() << endl;
         temp = temp->pNext;
     }
+    cout << ">>> ";
     cin >> cnt;
+    if (cnt<1 || cnt>count) {
+        throw MyException("Id do not exist");
+    }
     cnt -= 1;
     temp = main.Head;
     for (int i = 0; i < cnt; i++) {
@@ -153,7 +164,7 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, name);
         temp->data->SetName(name);
-        cout << "Complete!";
+        cout << "Complete!" << endl;
         break;
     }
     case 2:
@@ -163,6 +174,7 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, bDay);
         temp->data->SetBDay(bDay);
+        cout << "Complete!" << endl;
         break;
     }
     case 3:
@@ -172,6 +184,7 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, age);
         temp->data->SetAge(age);
+        cout << "Complete!" << endl;
         break;
     }
     case 4:
@@ -181,6 +194,7 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, parentData);
         temp->data->SetParentData(parentData);
+        cout << "Complete!" << endl;
         break;
     }
     case 5:
@@ -190,6 +204,7 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, spousData);
         temp->data->SetSpousData(spousData);
+        cout << "Complete!" << endl;
         break;
     }
     case 6:
@@ -199,6 +214,7 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, childData);
         temp->data->SetChildData(childData);
+        cout << "Complete!" << endl;
         break;
     }
     case 7:
@@ -208,10 +224,13 @@ List& List::Edit() {
         cin.ignore();
         getline(cin, day);
         temp->data->SetDeathDay(day);
+        cout << "Complete!" << endl;
         break;
     }
     default:
     {
+        system("cls");
+        cout << "Incorrected number" << endl;
         break;
     }
     }
@@ -236,9 +255,8 @@ void List::DelAll(){
 void List::Print(){
     system("cls");
     Element* temp = this->Head;
-    if (count == 0) {
-        cout << "The list is empty" << endl;
-        return;
+    if (this->IsEmpty()) {
+        throw MyException("List is empty");
     }
 
     int cnt = count;
@@ -254,7 +272,14 @@ void List::Print(){
 }
 
 void List::SaveToFile() {
+    system("cls");
+    if (this->IsEmpty()) {
+        throw MyException("List is empty");
+    }
     ofstream fout("file.txt");
+    if (!fout.is_open()) {
+        throw MyException("File do not exist");
+    }
     fout << this->count << endl;
     Element* Head_copy = Head;
     while(Head_copy != 0) {
@@ -263,7 +288,6 @@ void List::SaveToFile() {
         Head_copy = Head_copy->pNext;
     }
     fout.close();
-    system("cls");
     cout << "Complete!" << endl;
 }
 
@@ -271,6 +295,9 @@ List& List::ReadFromFile() {
     string name, bDay, age, parentData, spousData, childData, deathDay;
     int cnt = 0;
     ifstream fin("file.txt");
+    if (!fin.is_open()) {
+        throw MyException("File do not exist");
+    }
     fin >> cnt;
     for (int i = 0; i < cnt; i++) {
         getline(fin, name);
@@ -301,4 +328,8 @@ List& List::ReadFromFile() {
     system("cls");
     cout << "Complete!" << endl;
     return *this;
+}
+
+bool List::IsEmpty() {
+    return !count;
 }
