@@ -25,72 +25,48 @@ int Menu(List list) {
 			cin >> v;
 		}
 
-		switch (v) {
-		case 1:
-		{
-			++list;
-			break;
-		}
-		case 2:
-		{
-			try {
+		try {
+			switch (v) {
+			case 1:
+			{
+				++list;
+				break;
+			}
+			case 2:
+			{
 				list.SaveToFile();
 				break;
 			}
-			catch (MyException& exception) {
-				cout << exception.what() << endl;
-				return Menu(list);
-			}
-		}
-		case 3:
-		{
-			try {
+			case 3:
+			{
 				list.ReadFromFile();
 				break;
 			}
-			catch (MyException& exception) {
-				cout << exception.what() << endl;
-				return Menu(list);
-			}
-		}
-		case 4:
-		{
-			try {
+			case 4:
+			{
 				list.Print();
 				break;
 			}
-			catch (MyException& exception) {
-				cout << exception.what() << endl;
-				return Menu(list);
-			}
-		}
-		case 5:
-		{
-			try {
+			case 5:
+			{
 				list.Edit();
 				break;
 			}
-			catch (MyException& exception) {
-				cout << exception.what() << endl;
-				return Menu(list);
-			}
-		}
-		case 6:
-		{
-			try {
+			case 6:
+			{
 				list.Del();
 				break;
 			}
-			catch (MyException& exception) {
-				cout << exception.what() << endl;
-				return Menu(list);
+			case 0:
+			{
+				menu = 0;
+			}
+
 			}
 		}
-		case 0:
-		{
-			menu = 0;
-		}
-
+		catch (MyException& exception) {
+			cout << exception.what() << endl;
+			return Menu(list);
 		}
 	}
 	return 0;
