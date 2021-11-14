@@ -9,7 +9,7 @@ public:
 	FileManager();
 	~FileManager();
 
-	void SaveToFile(List&);
-	List& ReadFromFile(List&);
+	void Save(List&);
+	List& Read(List&);
 };
 

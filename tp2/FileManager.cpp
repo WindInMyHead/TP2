@@ -1,7 +1,7 @@
 #include "FileManager.h"
 
 FileManager::FileManager() {
-    this->file.open("file.txt");
+    file.open("file.txt");
     if (!file.is_open()) {
         throw MyException("File do not exist");
     }
@@ -11,11 +11,13 @@ FileManager::~FileManager() {
     file.close();
 }
 
-void FileManager::SaveToFile(List& list) {
+void FileManager::Save(List& list) {
     system("cls");
     if (list.IsEmpty()) {
         throw MyException("List is empty");
     }
+    file.close();
+    this->file.open("file.txt", ios::out | ios::trunc);
     this->file << list.GetCount() << endl;
     Element* Head_copy = list.GetHead();
     while (Head_copy != 0) {
@@ -25,11 +27,11 @@ void FileManager::SaveToFile(List& list) {
             << Head_copy->data->GetChildData() << endl;
         Head_copy = Head_copy->pNext;
     }
-    this->file.close();
+    file.clear();
     cout << "Complete!" << endl;
 }
 
-List& FileManager::ReadFromFile(List& list) {
+List& FileManager::Read(List& list) {
     string name, bDay, age, parentData, spousData, childData, deathDay;
     int cnt = 0;
     this->file >> cnt;
@@ -62,6 +64,7 @@ List& FileManager::ReadFromFile(List& list) {
         list.SetCount(inc);
     }
     system("cls");
+    file.clear();
     cout << "Complete!" << endl;
     return *this;
 }

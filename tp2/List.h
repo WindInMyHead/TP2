@@ -6,23 +6,32 @@ typedef struct Element {
 	Element* pNext = 0;
 } Element;
 
-class List
-{
+class List {
+private:
+	Element* Head;
+	Element* Tail;
+	int count;
+
 public:
 	List();
 	~List();
+
+	List& Del();//удаление
+	List& Del(int cnt);
 	void Del_head();
 	void DelAll();
 
 	List& operator++();//добавление в конец
+	Element* operator[](const int index);
 
 	void AddElem(Element* elem);
-
-	List& Del();//удаление
 
 	List& Edit();//редактирование элемента
 
 	void Print();//Печать списка
+
+	List& RemoveSimilar();
+
 	int GetCount();
 	void SetCount(int);
 
@@ -33,8 +42,4 @@ public:
 	void SetTail(Element*);
 
 	bool IsEmpty();
-private:
-	Element* Head;
-	Element* Tail;
-	int count;
 };
